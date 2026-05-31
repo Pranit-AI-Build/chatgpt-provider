@@ -81,6 +81,7 @@ let sliderStates = {
 let hasChanged = false;
 
 // Elements
+const mainArea = document.getElementById('mainArea');
 const landingContainer = document.getElementById('landingContainer');
 const conversationContainer = document.getElementById('conversationContainer');
 const documentCanvas = document.getElementById('documentCanvas');
@@ -96,7 +97,24 @@ const currentStateText = document.getElementById('currentStateText');
 // Initial Setup
 window.addEventListener('DOMContentLoaded', () => {
   setManualState(0);
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && currentState === 0) {
+      e.preventDefault();
+      triggerFlow();
+    }
+  });
 });
+
+function updateLayoutMode() {
+  if (!mainArea) return;
+  if (currentState === 0) {
+    mainArea.classList.add('landing-active');
+    mainArea.classList.remove('chat-active');
+  } else {
+    mainArea.classList.remove('landing-active');
+    mainArea.classList.add('chat-active');
+  }
+}
 
 // Trigger the Flow (auto-simulation from clicking Send)
 function triggerFlow() {
@@ -368,6 +386,8 @@ function updateUIForState() {
       document.getElementById('copyWorkBtn').classList.add('glowing-active');
       break;
   }
+
+  updateLayoutMode();
 }
 
 // Inspector Button controls (Manual overrides)

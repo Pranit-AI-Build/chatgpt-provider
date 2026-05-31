@@ -142,7 +142,7 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="main-area">
+    <main class="main-area landing-active" id="mainArea">
       <!-- Header -->
       <header class="header">
         <div class="header-left">
@@ -154,16 +154,12 @@
         </div>
       </header>
 
+      <div class="main-content" id="mainContent">
       <!-- Chat Workspace -->
       <div class="chat-workspace" id="chatWorkspace">
         
         <!-- State 0: Landing View (Default State) -->
         <div class="landing-container" id="landingContainer">
-          <div class="gpt-intro-logo">
-            <svg class="gpt-main-spiral" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm-3-3c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm6-5c0-.83.67-1.5 1.5-1.5S19 8.67 19 9.5 18.33 11 17.5 11 16 10.33 16 9.5zm-9 0C7 8.67 7.67 8 8.5 8S10 8.67 10 9.5 9.33 11 8.5 11 7 10.33 7 9.5z"/>
-            </svg>
-          </div>
           <h1 class="landing-title">Ready when you are.</h1>
         </div>
 
@@ -325,8 +321,8 @@
 
       </div>
 
-      <!-- Bottom Chat Input Bar -->
-      <footer class="input-area">
+      <!-- Chat Input (centered on landing, bottom after send) -->
+      <footer class="input-area" id="inputArea">
         <div class="input-container">
           <div class="input-bar">
             
@@ -367,6 +363,7 @@
           </div>
         </div>
       </footer>
+      </div>
     </main>
 
   </div>
