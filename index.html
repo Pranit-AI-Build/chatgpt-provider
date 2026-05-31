@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT - Interactive Architecture Verification</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+
+        <!-- Sidebar top header: logo + toggle -->
+        <div class="sidebar-header">
+          <!-- Official OpenAI / ChatGPT swirl logo -->
+          <svg class="icon-openai" viewBox="0 0 41 41" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37.532 16.87a9.963 9.963 0 0 0-.856-8.184 10.078 10.078 0 0 0-10.855-4.835 9.964 9.964 0 0 0-6.205-4.371 10.079 10.079 0 0 0-11.783 4.966 9.967 9.967 0 0 0-6.681 3.045 10.079 10.079 0 0 0-2.122 11.088 9.96 9.96 0 0 0 .856 8.185 10.079 10.079 0 0 0 10.855 4.835 9.965 9.965 0 0 0 6.205 4.371 10.078 10.078 0 0 0 11.784-4.966 9.967 9.967 0 0 0 6.68-3.045 10.079 10.079 0 0 0 2.122-11.087zM22.498 37.886a7.474 7.474 0 0 1-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 0 0 .655-1.134V19.054l3.366 1.944a.12.12 0 0 1 .066.092v9.299a7.505 7.505 0 0 1-7.49 7.496zM6.392 31.006a7.471 7.471 0 0 1-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 0 0 1.308 0l9.724-5.614v3.888a.12.12 0 0 1-.048.103l-8.051 4.649a7.504 7.504 0 0 1-10.24-2.744zM4.297 13.62A7.469 7.469 0 0 1 8.2 10.333c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 0 0 .654 1.132l9.723 5.614-3.366 1.944a.12.12 0 0 1-.114.012L7.044 23.86a7.504 7.504 0 0 1-2.747-10.24zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 0 1 .114-.012l8.048 4.648a7.498 7.498 0 0 1-1.158 13.528v-9.476a1.293 1.293 0 0 0-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 0 0-1.308 0l-9.723 5.614v-3.888a.12.12 0 0 1 .048-.103l8.05-4.645a7.497 7.497 0 0 1 11.135 7.763zm-21.063 6.929l-3.367-1.944a.12.12 0 0 1-.065-.092v-9.299a7.497 7.497 0 0 1 12.293-5.756 6.94 6.94 0 0 0-.236.134l-7.965 4.6a1.294 1.294 0 0 0-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18z"/>
+          </svg>
+          <button class="sidebar-toggle-btn" title="Toggle sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="icon-toggle">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- New Chat button -->
+        <button class="new-chat-btn" onclick="resetFlow()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-compose">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          <span>New chat</span>
+        </button>
+
+        <!-- Nav items -->
+        <div class="sidebar-nav">
+          <button class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <span>Search chats</span>
+          </button>
+          <button class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>Images</span>
+          </button>
+          <button class="sidebar-nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+              <circle cx="6.5" cy="6.5" r="2.5"/>
+              <circle cx="17.5" cy="6.5" r="2.5"/>
+              <circle cx="17.5" cy="17.5" r="2.5"/>
+              <circle cx="6.5" cy="17.5" r="2.5"/>
+            </svg>
+            <span>Apps</span>
+          </button>
+          <button class="sidebar-nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-icon">
+              <path d="M3 12h18M12 3l7 9-7 9-7-9 7-9z"/>
+            </svg>
+            <span>Deep research</span>
+          </button>
+        </div>
+
+
+
+        <div class="chat-history-section">
+          <div class="history-group-title">Recent Chats</div>
+          <div class="history-list">
+            <div class="history-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="history-icon">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="history-text">E-commerce Scalability Plan</span>
+            </div>
+            <div class="history-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="history-icon">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="history-text">GraphQL API Migration</span>
+            </div>
+            <div class="history-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="history-icon">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="history-text">Redis Caching Architecture</span>
+            </div>
+            <div class="history-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="history-icon">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span class="history-text">Next.js 15 Server Components</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="bottom-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-icon">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>See plans and pricing</span>
+        </button>
+        <button class="bottom-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-icon">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
+        <button class="bottom-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bottom-icon">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>Help</span>
+        </button>
+        
+        <div class="user-tailored-card">
+          <div class="tailored-title">Get responses tailored to you</div>
+          <div class="tailored-desc">Log in to get answers based on saved chats, plus create images and upload files.</div>
+          <button class="login-btn-sidebar">Log In</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-area">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <span class="gpt-version-selector">ChatGPT <svg class="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+        </div>
+        <div class="header-right">
+          <button class="header-action-btn header-login-btn">Log in</button>
+          <button class="header-primary-btn">Sign up for free</button>
+        </div>
+      </header>
+
+      <!-- Chat Workspace -->
+      <div class="chat-workspace" id="chatWorkspace">
+        
+        <!-- State 0: Landing View (Default State) -->
+        <div class="landing-container" id="landingContainer">
+          <div class="gpt-intro-logo">
+            <svg class="gpt-main-spiral" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm-3-3c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5zm6-5c0-.83.67-1.5 1.5-1.5S19 8.67 19 9.5 18.33 11 17.5 11 16 10.33 16 9.5zm-9 0C7 8.67 7.67 8 8.5 8S10 8.67 10 9.5 9.33 11 8.5 11 7 10.33 7 9.5z"/>
+            </svg>
+          </div>
+          <h1 class="landing-title">Ready when you are.</h1>
+        </div>
+
+        <!-- Chat Conversation Area (Shows after Trigger / Send) -->
+        <div class="conversation-container" id="conversationContainer" style="display: none;">
+          
+          <!-- User Prompt Card -->
+          <div class="chat-row user-row">
+            <div class="message-wrapper">
+              <div class="avatar user-avatar">
+                <span>U</span>
+              </div>
+              <div class="message-content user-message">
+                Create an architecture blueprint for a scaling e-commerce backend.
+              </div>
+            </div>
+          </div>
+
+          <!-- Assistant Response Card (Dual-column layout) -->
+          <div class="chat-row assistant-row">
+            <div class="message-wrapper">
+              <div class="avatar gpt-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+              
+              <!-- Split Workspace -->
+              <div class="split-workspace-container">
+                
+                <!-- Left Panel: Text Canvas -->
+                <div class="document-canvas-wrapper">
+                  <div class="document-header">
+                    <span class="document-tag">DRAFT DESIGN BLUEPRINT</span>
+                    <span class="document-status" id="docStatusBadge">STREAMING...</span>
+                  </div>
+                  
+                  <div class="document-canvas" id="documentCanvas">
+                    <!-- Dynamic Streamed Text Appears Here -->
+                  </div>
+                </div>
+
+                <!-- Right Panel: Verification Sidebar -->
+                <div class="verification-panel" id="verificationPanel">
+                  
+                  <!-- Loading Skeleton Container -->
+                  <div class="verification-skeleton" id="verificationSkeleton">
+                    <div class="skeleton-title">Checking System Assumptions...</div>
+                    <div class="skeleton-line pulse-animation" style="width: 90%;"></div>
+                    <div class="skeleton-line pulse-animation" style="width: 75%;"></div>
+                    <div class="skeleton-line pulse-animation" style="width: 80%;"></div>
+                    <div class="skeleton-line pulse-animation" style="width: 60%;"></div>
+                    <div class="skeleton-metrics">
+                      <div class="skeleton-metric pulse-animation"></div>
+                      <div class="skeleton-metric pulse-animation"></div>
+                    </div>
+                  </div>
+
+                  <!-- Active Verification Control Content -->
+                  <div class="verification-active-content" id="verificationActiveContent" style="display: none;">
+                    <div class="verification-title-area">
+                      <svg class="verify-shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      </svg>
+                      <h3>Assumption Verifier</h3>
+                    </div>
+                    
+                    <p class="verification-intro">
+                      We identified <span class="badge-count">2</span> critical scalability assumptions in the blueprint. Adjust the sliders below to run live verification.
+                    </p>
+
+                    <!-- Slider 1: Target Load Scale -->
+                    <div class="verification-card" id="card-scale">
+                      <div class="card-header">
+                        <span class="assumption-tag alert-risky" id="tag-scale">Risky Assumption</span>
+                        <h4>Target Load Scale</h4>
+                      </div>
+                      <p class="card-desc">Max load assumptions in current draft: <strong id="val-desc-scale">500 peak users</strong>.</p>
+                      
+                      <!-- Custom Interactive Slider -->
+                      <div class="slider-container">
+                        <input type="range" min="1" max="3" value="1" class="custom-slider" id="sliderScale" oninput="handleSliderInput('scale', this.value)">
+                        <div class="slider-ticks">
+                          <span class="tick active" onclick="setSliderValue('scale', 1)">Small Biz</span>
+                          <span class="tick" onclick="setSliderValue('scale', 2)">Mid-Market</span>
+                          <span class="tick" onclick="setSliderValue('scale', 3)">Enterprise</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Slider 2: Database Strategy -->
+                    <div class="verification-card" id="card-db">
+                      <div class="card-header">
+                        <span class="assumption-tag alert-risky" id="tag-db">Risky Assumption</span>
+                        <h4>Database Strategy</h4>
+                      </div>
+                      <p class="card-desc">Concurrent write lock limits: <strong id="val-desc-db">Single SQLite Instance</strong>.</p>
+
+                      <!-- Custom Interactive Slider -->
+                      <div class="slider-container">
+                        <input type="range" min="1" max="3" value="1" class="custom-slider" id="sliderDb" oninput="handleSliderInput('db', this.value)">
+                        <div class="slider-ticks">
+                          <span class="tick active" onclick="setSliderValue('db', 1)">Relational</span>
+                          <span class="tick" onclick="setSliderValue('db', 2)">Hybrid Cache</span>
+                          <span class="tick" onclick="setSliderValue('db', 3)">NoSQL Dist</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Verification Manifesto Panel (State 5) -->
+                    <div class="manifesto-panel" id="manifestoPanel" style="display: none;">
+                      <div class="manifesto-title">
+                        <svg class="success-check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Verified Specification Manifesto</span>
+                      </div>
+                      <div class="manifesto-list">
+                        <div class="manifesto-item">
+                          <div class="manifesto-check">✔</div>
+                          <div class="manifesto-info">
+                            <strong>Load Scale Capability:</strong> Verified for <span id="manifesto-scale-text">Enterprise Scale (100k+ users)</span>.
+                          </div>
+                        </div>
+                        <div class="manifesto-item">
+                          <div class="manifesto-check">✔</div>
+                          <div class="manifesto-info">
+                            <strong>Database Architecture:</strong> Verified for <span id="manifesto-db-text">Distributed NoSQL Data Storage</span>.
+                          </div>
+                        </div>
+                        <div class="manifesto-item">
+                          <div class="manifesto-check">✔</div>
+                          <div class="manifesto-info">
+                            <strong>Fault Tolerance:</strong> Zero single point of failures identified.
+                          </div>
+                        </div>
+                      </div>
+                      <button class="copy-manifesto-btn" id="copyWorkBtn" onclick="copyBlueprintToClipboard()">
+                        <span class="copy-btn-inner">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-copy">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                          </svg>
+                          <span id="copyBtnText">Copy Verified Blueprint</span>
+                        </span>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Chat Input Bar -->
+      <footer class="input-area">
+        <div class="input-container">
+          <div class="input-bar">
+            
+            <button class="input-action-btn attach-btn" title="Attach file">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+
+            <!-- Text Input prefilled with the prompt -->
+            <input type="text" id="chatInput" class="chat-input" value="Create an architecture blueprint for a scaling e-commerce backend." placeholder="Ask anything">
+
+            <div class="input-right-actions">
+              <!-- Voice Button -->
+              <button class="voice-badge-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-mic">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+                <span class="voice-text">Voice</span>
+              </button>
+
+              <!-- Send Button -->
+              <button class="send-btn" id="sendBtn" onclick="triggerFlow()" title="Send prompt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="icon-send">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+              </button>
+            </div>
+
+          </div>
+          <div class="input-footer-text">
+            By messaging ChatGPT, an AI chatbot, you agree to our <a href="#">Terms</a> and have read our <a href="#">Privacy Policy</a>.
+          </div>
+        </div>
+      </footer>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast">Blueprint copied to clipboard!</div>
+
+  <!-- JavaScript logic -->
+  <script src="app.js"></script>
+</body>
+</html>
