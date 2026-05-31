@@ -94,15 +94,31 @@ const sendBtn = document.getElementById('sendBtn');
 const docStatusBadge = document.getElementById('docStatusBadge');
 const currentStateText = document.getElementById('currentStateText');
 
+const FIXED_PROMPT = 'Create an architecture blueprint for a scaling e-commerce backend.';
+
+function lockChatInput() {
+  chatInput.readOnly = true;
+  chatInput.value = FIXED_PROMPT;
+}
+
 // Initial Setup
 window.addEventListener('DOMContentLoaded', () => {
-  setManualState(0);
+  lockChatInput();
   chatInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && currentState === 0) {
       e.preventDefault();
       triggerFlow();
     }
   });
+  ['beforeinput', 'paste', 'cut', 'drop'].forEach((eventName) => {
+    chatInput.addEventListener(eventName, (e) => e.preventDefault());
+  });
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      e.preventDefault();
+    }
+  });
+  setManualState(0);
 });
 
 function updateLayoutMode() {
@@ -135,7 +151,7 @@ function goToState0() {
   updateUIForState();
   
   // Reset fields
-  chatInput.value = "Create an architecture blueprint for a scaling e-commerce backend.";
+  lockChatInput();
   chatInput.disabled = false;
   sendBtn.disabled = false;
   documentCanvas.innerHTML = "";
@@ -322,6 +338,7 @@ function updateUIForState() {
     case 0: // Initial
       landingContainer.style.display = 'flex';
       conversationContainer.style.display = 'none';
+      lockChatInput();
       chatInput.disabled = false;
       sendBtn.disabled = false;
       docStatusBadge.textContent = 'DRAFT';

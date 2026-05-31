@@ -1028,6 +1028,16 @@ body {
 .chat-input::placeholder {
   color: var(--color-text-muted);
 }
+.chat-input--fixed,
+.chat-input[readonly] {
+  cursor: default;
+  caret-color: transparent;
+  user-select: none;
+  pointer-events: none;
+}
+.chat-input--fixed:focus {
+  outline: none;
+}
 .input-action-btn {
   background: transparent;
   border: none;
